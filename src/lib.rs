@@ -144,10 +144,13 @@ impl<'a, T> AsMut<[T]> for CMutSlice<'a, T> {
     }
 }
 
-unsafe impl<'a, T> Sync for CSlice<'a, T> { }
+unsafe impl<'a, T: Sync> Sync for CSlice<'a, T> { }
 
-unsafe impl<'a, T> Sync for CMutSlice<'a, T> { }
+unsafe impl<'a, T: Sync> Send for CSlice<'a, T> { }
 
+unsafe impl<'a, T: Sync> Sync for CMutSlice<'a, T> { }
+
+unsafe impl<'a, T: Send> Send for CMutSlice<'a, T> { }
 
 impl<'a, T> Index<usize> for CSlice<'a, T> {
     type Output = T;
