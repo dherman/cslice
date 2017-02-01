@@ -1,6 +1,6 @@
 [package]
 name = "cslice"
-version = "0.2.0"
+version = "0.3.0"
 authors = ["Dave Herman <dherman@mozilla.com>"]
 description = "A library of slices with a stable ABI for interfacing with C."
 repository = "https://github.com/dherman/cslice"
