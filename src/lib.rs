@@ -42,7 +42,7 @@ impl<'a, T> CSlice<'a, T> {
     /// # Safety
     ///
     /// The region of memory from `base` (inclusive) to `base + len * sizeof<T>`
-    /// (exclusive) must be valid for the duration of lifetime `'a`.
+    /// (exclusive) must be valid and immutable for the duration of lifetime `'a`.
     pub unsafe fn new(base: *const T, len: usize) -> Self {
         assert!(base != ptr::null());
         CSlice {
@@ -90,7 +90,8 @@ impl<'a, T> CMutSlice<'a, T> {
     /// # Safety
     ///
     /// The region of memory from `base` (inclusive) to `base + len * sizeof<T>`
-    /// (exclusive) must be valid for the duration of lifetime `'a`.
+    /// (exclusive) must be valid for the duration of lifetime `'a`, and not alias
+    /// any memory visible to Rust code.
     pub unsafe fn new(base: *mut T, len: usize) -> Self {
         assert!(base != ptr::null_mut());
         CMutSlice {
