@@ -77,7 +77,7 @@ impl<'a, T> AsRef<[T]> for CSlice<'a, T> {
 ///
 /// A Rust slice can be constructed from a corresponding `CMutSlice` via `as_mut`.
 #[repr(C)]
-#[derive(Clone, Copy)]
+#[derive(Copy)]
 pub struct CMutSlice<'a, T> {
     base: *mut T,
     len: usize,
@@ -112,14 +112,14 @@ impl<'a, T> CMutSlice<'a, T> {
     }
 
     /// A cheap conversion to a Rust slice. This is slightly more general than `as_ref`.
-    pub fn as_slice(&self) -> &'a [T] {
+    pub fn as_slice<'b>(&'b self) -> &'b [T] {
         unsafe {
             slice::from_raw_parts(self.base, self.len)
         }
     }
 
     /// A cheap conversion to a mutable Rust slice. This is slightly more general than `as_mut`.
-    pub fn as_mut_slice(&mut self) -> &'a mut [T] {
+    pub fn as_mut_slice<'b>(&'b mut self) -> &'b mut [T] {
         unsafe {
             slice::from_raw_parts_mut(self.base, self.len)
         }
